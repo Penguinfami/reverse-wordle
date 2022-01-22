@@ -22,7 +22,10 @@ const WordBoard = (props) => {
             </div>
             {
                 props.setup.rows.map(
-                    (row, rowNum) => <div key={row.key} className={`wordRow justify-content-center border-2 d-flex flex-row ${props.currentRow === rowNum ? 'currentRow bg-info' : '' }`}>{row.combination.split('').map((tile, index) => toTile(tile, row.word[index], index))}</div>
+                    (row, rowNum) => 
+                    <div key={row.key} 
+                        className={`wordRow justify-content-center border-2 d-flex flex-row ${props.currentRow === rowNum ? 'currentRow' : '' }`}>{row.combination.split('').map((tile, index) => toTile(tile, row.word[index], index))}
+                    </div>
                 )
             }
         </div>

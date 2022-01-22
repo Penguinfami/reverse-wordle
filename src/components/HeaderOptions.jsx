@@ -4,14 +4,19 @@ import { faQuestionCircle, faCog} from "@fortawesome/free-solid-svg-icons"
 const HeaderOptions = (props) => {
 
   return (
-    <div className="headerOptions w-100 d-flex justify-content-between px-2">
-        <button className="border-0 fs-1" 
+    <div 
+        className="headerOptions w-100 d-flex justify-content-between px-2">
+        <button 
+        style={{color: props.darkMode ? '#d6d6d6' : 'black', backgroundColor: props.darkMode ? '#3E3E3E' : 'white'}}
+            className="headerButton border-0 fs-1" 
             onClick={() => props.toggleInfo(true)
         }>
-            <i class="far fa-question-circle"></i>
+            <i className="far fa-question-circle"></i>
         </button>
-        <h1>Reverse Wordle</h1>
-        <button className="border-0 fs-1" 
+        <h1>REVERSE WORDLE</h1>
+        <button 
+        style={{color: props.darkMode ? '#d6d6d6' : 'black', backgroundColor: props.darkMode ? '#3E3E3E' : 'white'}}
+            className="headerButton border-0 fs-1" 
             onClick={() => props.toggleSettings(true)}>
             <FontAwesomeIcon icon={faCog}/>
         </button>

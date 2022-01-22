@@ -27,6 +27,7 @@ function App() {
   const [infoOpen, toggleInfo] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [currentRow, setCurrentRow] = useState(-1);
+  const [darkMode, toggleDarkMode] = useState(false);
 
   function generateCombinations (){
     let arr = []
@@ -140,7 +141,7 @@ function App() {
 
   useEffect(()=>{
     generateCombinations();
-    newGame();
+    //newGame();
   }, []);
 
   useEffect(() => {
@@ -230,26 +231,51 @@ function App() {
 
 
   return (
-    <div className="App p-2">
+    <div style={{color: darkMode ? '#d6d6d6' : 'black', backgroundColor: darkMode ? '#3E3E3E' : 'white'}} className={`App p-2 vh-100`}>
       {textModals.map(
         (modal) => modal.visible ? <Modal isOpen={modal.visible} ariaHideApp={false}><h1>{modal.title}{`${modal.visible}`}</h1><h5>{modal.content}</h5> <button onClick={() => closeModal()}>Close</button></Modal> : null)
       }
-      <Modal isOpen={settingsOpen} ariaHideApp={false}>
-        <Settings/>
-        <button onClick={() => toggleSettings(false)}>Close</button>
+      <Modal className="headerModal" isOpen={settingsOpen} ariaHideApp={false}
+        style={{
+          overlay: {
+            background: `${darkMode ? '#3E3E3E' : 'white'}`
+          },
+          content: {
+            background: `${darkMode ? '#3E3E3E' : 'white'}`,
+            marginTop: "3rem",
+            minHeight: "75vh"
+          }
+        }}
+      >
+        <Settings darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
+        <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleSettings(false)}><i class="far fa-times-circle"></i></button>
       </Modal>
       
-      <Modal isOpen={infoOpen} ariaHideApp={false}>
-        <Info/>
-        <button onClick={() => toggleInfo(false)}>Close</button>
+      <Modal className="headerModal" isOpen={infoOpen} ariaHideApp={false}
+        style={{
+          overlay: {
+            background: `${darkMode ? '#3E3E3E' : 'white'}`
+          },
+          content: {
+            background: `${darkMode ? '#3E3E3E' : 'white'}`
+          }
+        }}
+      >
+        <Info darkMode={darkMode}/>
+        <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleInfo(false)}><i class="far fa-times-circle"></i></button>
         </Modal>
 
-      <HeaderOptions toggleSettings={toggleSettings} toggleInfo={toggleInfo} />
-      {gameStarted ? <WordBoard setup={boardSetup} currentRow={currentRow} typedWord={typedWord} statuses={gameData.symbols}/> : null}
+      <HeaderOptions darkMode={darkMode} toggleSettings={toggleSettings} toggleInfo={toggleInfo} />
+      {gameStarted ? <WordBoard darkMode={darkMode} setup={boardSetup} currentRow={currentRow} typedWord={typedWord} statuses={gameData.symbols}/> : null}
       { gameOver ? 
-      <button className="rounded-pill border-1 px-4 py-3" onClick={() => newGame()}>New Game</button> 
+      <button 
+          className="rounded-pill border-3 px-4 py-3 my-3" 
+          onClick={() => newGame()}
+          style={{color: darkMode ? '#d6d6d6' : 'black', backgroundColor: darkMode ? '#3A3A3E' : 'white'}}>   
+            NEW GAME
+      </button> 
       : <div className="userInputs d-flex justify-content-center">
-          <Keyboard onBack={onBackspace} onEnter={checkWordValidity} onType={onType} keys={gameData.keys}/>
+          <Keyboard darkMode={darkMode} onBack={onBackspace} onEnter={checkWordValidity} onType={onType} keys={gameData.keys}/>
         </div>
       }
 
