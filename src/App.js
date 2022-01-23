@@ -158,7 +158,7 @@ function App() {
     setRoundCombinations(validCombinations);
     let setup = {originalWord: gameWord, rows : []};
     for (let i = 0; i < validCombinations.length; i++){
-      console.log(validCombinations[i]);
+      //console.log(validCombinations[i]);
       setup.rows.push({
         combination: validCombinations[i].combo,
         rowNumber: i,
@@ -211,7 +211,7 @@ function App() {
 
   const openModal = (role) => {
     let newModals = textModals.map((modal) => modal.role === role ? {...modal, visible: true} : modal );
-    console.log(newModals);
+    //console.log(newModals);
     toggleModals(newModals); 
   }
 
@@ -303,9 +303,11 @@ function App() {
         <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleAnswers(false)}><i class="far fa-times-circle"></i></button>
       </Modal>
 
-      <HeaderOptions darkMode={darkMode} toggleSettings={toggleSettings} toggleInfo={toggleInfo} />
-      {gameStarted ? <WordBoard giveUp={giveUp} gameOver={gameOver} gameStarted={gameStarted} darkMode={darkMode} setup={boardSetup} currentRow={currentRow} typedWord={typedWord} statuses={gameData.symbols}/> : null}
-      { gameOver ? 
+      { gameStarted ? 
+      <HeaderOptions darkMode={darkMode} toggleSettings={toggleSettings} toggleInfo={toggleInfo} /> : null}
+
+      { gameStarted ? <WordBoard giveUp={giveUp} gameOver={gameOver} gameStarted={gameStarted} darkMode={darkMode} setup={boardSetup} currentRow={currentRow} typedWord={typedWord} statuses={gameData.symbols}/> : null}
+      {gameStarted ? gameOver ?
       <button 
           className="rounded-pill border-3 px-4 py-3 my-3" 
           onClick={() => newGame()}
@@ -315,6 +317,7 @@ function App() {
       : <div className="userInputs d-flex justify-content-center">
           <Keyboard darkMode={darkMode} onBack={onBackspace} onEnter={checkWordValidity} onType={onType} keys={gameData.keys}/>
         </div>
+      : null
       }
 
     </div>
