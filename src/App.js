@@ -5,6 +5,7 @@ import Keyboard from './components/Keyboard';
 import HeaderOptions from './components/HeaderOptions';
 import Settings from './components/Settings';
 import Info from './components/Info';
+import RevealAnswers from './components/RevealAnswers';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-modal';
 import modals from './data/modals';
@@ -24,6 +25,7 @@ function App() {
   const [allCombinations, setAllCombinations] = useState([]);
   const [textModals, toggleModals] = useState(modals);
   const [settingsOpen, toggleSettings] = useState(false);
+  const [answersOpen, toggleAnswers] = useState(false);
   const [infoOpen, toggleInfo] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [currentRow, setCurrentRow] = useState(-1);
@@ -32,13 +34,11 @@ function App() {
   function generateCombinations (){
     let arr = []
     generateCombinationsAdd("", arr);
-    console.log(arr);
     setAllCombinations(arr);
   }
 
   function generateCombinationsAdd(current = "", arr){
     if (current.length === gameData.wordLength){
-      //console.log(`${current}\n`);
       arr.push(current);
     } else {
       generateCombinationsAdd(`${current}${gameData.symbols.green}`, arr);
@@ -56,15 +56,17 @@ function App() {
 
   const checkWordValidity = () => {
     if (typedWord.length !== gameData.wordLength) return false;
-    if (possibleWords.indexOf(typedWord) === -1) return false;
+    if (possibleWords.indexOf(typedWord) === -1) {
+      openModal("invalidWord");
+      return false;
+    }
     if (roundWordsUsed.indexOf(typedWord) !== -1) return false;
     if (roundCombinations[currentRow].answers.indexOf(typedWord) !== -1){
-      console.log("Next row");
       setRoundWordsUsed([...roundWordsUsed, typedWord]);
       setCurrentRow(currentRow + 1);
       setTypedWord('');
     } else {
-      // stuff
+      openModal("incorrectWord");
     }
 
   }
@@ -135,41 +137,24 @@ function App() {
           break;
       }
     } 
-    //console.log(combo);
     return true;
   }
 
-  useEffect(()=>{
-    generateCombinations();
-    //newGame();
-  }, []);
-
-  useEffect(() => {
-    if (gameWord.length === 0) return;
-    getValidCombinations();
-    setCurrentRow(0);
-    setGameStarted(true);
-    setGameOver(false);
-  }, [gameWord]);
 
   const getValidCombinations = () =>{
     let validCombinations = [];
 
-    for (let i = 0; i < allCombinations.length; i++){ // guarantee at least 2 possible answers to not make it too difficult
+    for (let i = 0; i < allCombinations.length; i++){ // guarantee at least 7 possible answers to not make it too difficult
       let possibleAnswers = getPossibleComboAnswers(allCombinations[i]);
-      if (possibleAnswers.length > 1) validCombinations.push({combo: allCombinations[i], answers: possibleAnswers});
+      if (possibleAnswers.length > 6) validCombinations.push({combo: allCombinations[i], answers: possibleAnswers});
     }
 
     let validCombosLength = validCombinations.length;
-    console.log(validCombosLength);
     for (let i = 0; i < (validCombosLength - 5); i++){
       let randomIndex = Math.floor(Math.random() * validCombinations.length);
       validCombinations.splice(randomIndex, 1);
     }
 
-    for (let i = 0; i < validCombinations.length; i++){
-      console.log(`${validCombinations[i].combo} ${validCombinations[i].answers}\n`);
-    }
     setRoundCombinations(validCombinations);
     let setup = {originalWord: gameWord, rows : []};
     for (let i = 0; i < validCombinations.length; i++){
@@ -180,26 +165,17 @@ function App() {
         key: i,
         word: "",
       }) 
-      console.log(gameWord);
-
     }
     setBoardSetup(setup);
   }
 
   const onType = (key) => {
-    console.log(key)
-    console.log(typedWord);
     let newWord = typedWord + key;
     if (newWord.length <= gameData.wordLength){
       setTypedWord(newWord)
-      console.log(newWord)
-
     }
   }
 
-  const onEnter = () => {
-   
-  }
 
   const onBackspace = () => {
     if (typedWord.length > 0){
@@ -215,25 +191,71 @@ function App() {
   useEffect(()=>{
 
     if (currentRow >= roundCombinations.length && currentRow > 0){
-      console.log("SUCCESS!");
       toggleModals(modals.map((modal) => modal.role === 'success' ? {...modal, visible: true} : modal));
       setGameOver(true);
     }
   }, [currentRow])
 
-  const closeModal = () => {
-    console.log("closing");
-    let newModals = textModals.map((modal) => modal.visible ? {...modal, visible: false} : modal );
+  useEffect(()=>{
+    generateCombinations();
+    newGame();
+  }, []);
+
+  useEffect(() => {
+    if (gameWord.length === 0) return;
+    getValidCombinations();
+    setCurrentRow(0);
+    setGameStarted(true);
+    setGameOver(false);
+  }, [gameWord]);
+
+  const openModal = (role) => {
+    let newModals = textModals.map((modal) => modal.role === role ? {...modal, visible: true} : modal );
     console.log(newModals);
+    toggleModals(newModals); 
+  }
+
+  const closeModal = () => {
+    let newModals = textModals.map((modal) => modal.visible ? {...modal, visible: false} : modal );
     toggleModals(newModals);      
 
   }
 
+  const giveUp = () => {
+    toggleAnswers(true);
+    setGameOver(true);
+  }
+
 
   return (
-    <div style={{color: darkMode ? '#d6d6d6' : 'black', backgroundColor: darkMode ? '#3E3E3E' : 'white'}} className={`App p-2 vh-100`}>
+    <div style={{color: darkMode ? '#d6d6d6' : 'black', backgroundColor: darkMode ? '#3E3E3E' : 'white'}} 
+    className={`App p-2 `}>
       {textModals.map(
-        (modal) => modal.visible ? <Modal isOpen={modal.visible} ariaHideApp={false}><h1>{modal.title}{`${modal.visible}`}</h1><h5>{modal.content}</h5> <button onClick={() => closeModal()}>Close</button></Modal> : null)
+        (modal) => 
+          <Modal isOpen={modal.visible} ariaHideApp={false}
+            style={{
+              overlay: {
+                background: "none",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                borderColor: "none"
+              },
+              content: {
+                background: darkMode ? '#676767' : 'white',
+                color: darkMode ? '#dadada' : 'black',
+                height: "10rem",
+                width: "80%",
+                maxWidth: "17rem",
+                margin: "8rem auto",
+                alignSelf: "center"
+              }
+            }} >
+            <h4 className="text-center px-1 mt-3">{modal.title}</h4>
+            <button style={{color: darkMode ? '#dadada' : 'black'}} className="modalClose headerButton border-0 fs-2" onClick={() => closeModal()}><i class="far fa-times-circle"></i></button>
+            <h6 className="px-1 text-center">{modal.content}</h6>  
+          </Modal>
+        )
       }
       <Modal className="headerModal" isOpen={settingsOpen} ariaHideApp={false}
         style={{
@@ -265,8 +287,24 @@ function App() {
         <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleInfo(false)}><i class="far fa-times-circle"></i></button>
         </Modal>
 
+      <Modal className="headerModal" isOpen={answersOpen} ariaHideApp={false}
+        style={{
+          overlay: {
+            background: `${darkMode ? '#3E3E3E' : 'white'}`
+          },
+          content: {
+            background: `${darkMode ? '#3E3E3E' : 'white'}`,
+            marginTop: "3rem",
+            minHeight: "75vh"
+          }
+        }}
+      >
+        <RevealAnswers gameWord={gameWord} darkMode={darkMode} combinations={roundCombinations} setup={boardSetup} currentRow={currentRow} statuses={gameData.symbols}/>
+        <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleAnswers(false)}><i class="far fa-times-circle"></i></button>
+      </Modal>
+
       <HeaderOptions darkMode={darkMode} toggleSettings={toggleSettings} toggleInfo={toggleInfo} />
-      {gameStarted ? <WordBoard darkMode={darkMode} setup={boardSetup} currentRow={currentRow} typedWord={typedWord} statuses={gameData.symbols}/> : null}
+      {gameStarted ? <WordBoard giveUp={giveUp} gameOver={gameOver} gameStarted={gameStarted} darkMode={darkMode} setup={boardSetup} currentRow={currentRow} typedWord={typedWord} statuses={gameData.symbols}/> : null}
       { gameOver ? 
       <button 
           className="rounded-pill border-3 px-4 py-3 my-3" 

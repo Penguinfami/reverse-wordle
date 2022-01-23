@@ -17,6 +17,26 @@ const WordBoard = (props) => {
 
     return (
         <div className="wordBoard mx-auto d-flex flex-column">
+            <div className="wordBoardTiles d-flex justify-content-between p-0">
+                {!props.gameOver ?  
+                <button 
+                className="rounded-pill border-0" 
+                onClick={() => props.gameStarted ? props.giveUp() : null}
+                style={{color: props.darkMode ? '#d6d6d6' : 'black', backgroundColor: props.darkMode ? '#3A3A3E' : 'white'}}>   
+                    GIVE UP
+                </button>
+                : props.gameStarted ? 
+                <button 
+                    className="rounded-pill border-0" 
+                    onClick={() => props.giveUp() }
+                    style={{color: props.darkMode ? '#d6d6d6' : 'black', backgroundColor: props.darkMode ? '#3A3A3E' : 'white'}}>   
+                        VIEW POSSIBLE ANSWERS
+                </button> 
+                : null
+                }
+
+                {props.gameStarted ? <h6 className="lh-base mb-0">{props.currentRow + 1}/6</h6> : null}             
+            </div>
             <div  key="originalWord" className="wordRow border-2 d-flex justify-content-center">
                 { props.setup.originalWord.split('').map((letter, index) => toTile(props.statuses.green, letter, index))}
             </div>

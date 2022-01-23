@@ -3,7 +3,7 @@ const Info = (props) => {
   return (
     <div style={{color: props.darkMode ? '#d6d6d6' : 'black', backgroundColor: props.darkMode ? '#3E3E3E' : 'white'}}
         className="d-flex px-2 py-4 flex-column align-items-center">
-        <h1>How To Play</h1>
+        <h1>HOW TO PLAY</h1>
         
         <div className="text-start p-2 d-flex flex-column">
             <span>A spin on the hit game WORDLE.</span>
@@ -14,7 +14,8 @@ const Info = (props) => {
         </div>
 
         <div className="examples p-2 text-center">
-            <h3>Examples</h3>
+            <h3>EXAMPLE</h3>
+            <h4>   </h4>
 
             <h5>The word is ALONE</h5>
             <div className="d-flex flex-row mb-3">

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  min-height: 100vh;
 }
 
 .wordRow {
@@ -39,7 +40,7 @@
 .modalClose {
   position: absolute;
   top: 3%;
-  right: 1%;
+  right: 2%;
 }
 
 .headerModal {
@@ -47,14 +48,21 @@
   max-width: 600px;
 }
 
-/**.currentRow::after {
-  content: '\f0a8';
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  z-index: 1000;
-  position: relative;
-  left: 1rem;
-}**/
+.letterTile {
+  margin: auto 0.1rem;
+}
+
+.letterTile:first-child{
+  margin-left: 0 !important;
+}
+
+.letterTile:last-child{
+  margin-right: 0 !important;
+}
+
+.currentRow {
+  border-color:rgb(0, 0, 0);
+}
 
 @media only screen and (max-width: 600px) {
   .keyboard, .wordBoard{

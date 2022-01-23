@@ -7,11 +7,7 @@ const Settings = (props) => {
         <h1>Settings</h1>
         <div className="settingsOption">
             <div className="d-flex mt-3 align-items-baseline">
-                {props.darkMode
-                    ? <input checked onChange={() => props.toggleDarkMode(!props.darkMode)} className="mx-2" type="checkbox" name="themeToggle"></input>
-                    : <input onChange={() => props.toggleDarkMode(!props.darkMode)} className="mx-2" type="checkbox" name="themeToggle"></input>
-
-                }
+                <input checked={props.darkMode ? true : false} onChange={() => props.toggleDarkMode(!props.darkMode)} className="mx-2" type="checkbox" name="themeToggle"></input>
                 <h5>Dark Mode</h5>
             </div>
         </div>
