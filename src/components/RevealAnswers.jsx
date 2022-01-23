@@ -4,11 +4,11 @@ const RevealAnswers = (props) => {
 const toTile = (status, symbol, id) => {
     switch(status){
         case props.statuses.green:
-            return<LetterTile id={`${id}`} symbol={symbol} cols={props.setup.originalWord.length} status="bg-success"/>
+            return<LetterTile key={id} id={`${id}`} symbol={symbol} cols={props.setup.originalWord.length} status="bg-success"/>
         case props.statuses.yellow:
-            return<LetterTile id={`${id}`} symbol={symbol} cols={props.setup.originalWord.length} status="bg-warning"/>
+            return<LetterTile key={id} id={`${id}`} symbol={symbol} cols={props.setup.originalWord.length} status="bg-warning"/>
         case props.statuses.grey:
-            return<LetterTile id={`${id}`} symbol={symbol} cols={props.setup.originalWord.length} status="bg-secondary"/>
+            return<LetterTile key={id} id={`${id}`} symbol={symbol} cols={props.setup.originalWord.length} status="bg-secondary"/>
     }
         
 }
@@ -22,7 +22,7 @@ const toTile = (status, symbol, id) => {
                 (row) => 
                 <div key={row.combo} className="mt-3">
                     <div
-                        className={`wordRow justify-content-center border-2 d-flex flex-row `}>{row.combo.split('').map((tile, index) => toTile(tile, '', index))}
+                        className={`wordRow justify-content-center border-2 d-flex flex-row `}>{row.combo.split('').map((tile, index) => toTile(tile, '', `${index}${row.combo}`))}
                     </div>
                     <div className="text-center lh-1">                       
                         {row.answers.length < 10 ?

@@ -269,7 +269,7 @@ function App() {
               }
             }} >
             <h4 className="text-center px-1 mt-3">{modal.title}</h4>
-            <button style={{color: darkMode ? '#dadada' : 'black'}} className="modalClose headerButton border-0 fs-2" onClick={() => closeModal()}><i class="far fa-times-circle"></i></button>
+            <button style={{color: darkMode ? '#dadada' : 'black'}} className="modalClose headerButton border-0 fs-2" onClick={() => closeModal()}><i className="far fa-times-circle"></i></button>
             <h6 className="px-1 text-center">{modal.content}</h6>  
           </Modal>
         )
@@ -287,7 +287,7 @@ function App() {
         }}
       >
         <Settings darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
-        <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleSettings(false)}><i class="far fa-times-circle"></i></button>
+        <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleSettings(false)}><i className="far fa-times-circle"></i></button>
       </Modal>
       
       <Modal className="headerModal" isOpen={infoOpen} ariaHideApp={false}
@@ -301,7 +301,7 @@ function App() {
         }}
       >
         <Info darkMode={darkMode}/>
-        <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleInfo(false)}><i class="far fa-times-circle"></i></button>
+        <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleInfo(false)}><i className="far fa-times-circle"></i></button>
         </Modal>
 
       <Modal className="headerModal" isOpen={answersOpen} ariaHideApp={false}
@@ -319,7 +319,7 @@ function App() {
         }}
       >
         <RevealAnswers gameWord={gameWord} darkMode={darkMode} combinations={roundCombinations} setup={boardSetup} currentRow={currentRow} statuses={gameData.symbols}/>
-        <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleAnswers(false)}><i class="far fa-times-circle"></i></button>
+        <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleAnswers(false)}><i className="far fa-times-circle"></i></button>
       </Modal>
 
       { gameStarted ? 
