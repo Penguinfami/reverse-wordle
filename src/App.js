@@ -242,7 +242,7 @@ function App() {
                 borderColor: "none"
               },
               content: {
-                background: darkMode ? '#676767' : 'white',
+                background: darkMode ? '#3E3E3E' : 'white',
                 color: darkMode ? '#dadada' : 'black',
                 height: "10rem",
                 width: "80%",
