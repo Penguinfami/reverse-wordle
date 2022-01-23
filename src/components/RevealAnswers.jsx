@@ -16,7 +16,7 @@ const toTile = (status, symbol, id) => {
     <div className="text-center p-2" 
         style={{color: props.darkMode ? '#d6d6d6' : 'black', backgroundColor: props.darkMode ? '#3E3E3E' : 'white'}}
     >
-        <h2 className="mb-0">Possible Answers for `{props.gameWord}`</h2>
+        <h2 className="mb-0">POSSIBLE ANSWERS FOR `{props.gameWord}`</h2>
         <div>
             {props.combinations.map(
                 (row) => 
