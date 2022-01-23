@@ -44,7 +44,7 @@ const WordBoard = (props) => {
                 props.setup.rows.map(
                     (row, rowNum) => 
                     <div key={`row${row.key}${rowNum}`}
-                        style={{ borderColor: props.currentRow === rowNum ? props.darkMode ? '#b0b0b0' : 'black' : false}}
+                        style={{ borderColor: props.currentRow === rowNum ? props.darkMode ? '#d6d6d6' : 'black' : false}}
                         className={`wordRow justify-content-center border-2 d-flex flex-row ${props.currentRow === rowNum ? `currentRow` : '' }`}>{row.combination.split('').map((tile, index) => toTile(tile, row.word[index], `word${index}${rowNum}`))}
                     </div>
                 )
