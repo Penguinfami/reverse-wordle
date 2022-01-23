@@ -151,23 +151,27 @@ function App() {
     // guarantee at least 7 possible answers to not make it too difficult
     getValidCombinationsSplitter(0, allCombinations.length - 1, allCombinations, validCombinations, 7);
     let validCombosLength = validCombinations.length;
-    for (let i = 0; i < (validCombosLength - 5); i++){
+    if (validCombosLength < 5) return false;
+    let gameCombinations = [];
+    for (let i = 0; i < 5; i++){
       let randomIndex = Math.floor(Math.random() * validCombinations.length);
+      gameCombinations.push(validCombinations[randomIndex]);
       validCombinations.splice(randomIndex, 1);
     }
 
-    setRoundCombinations(validCombinations);
+    setRoundCombinations(gameCombinations);
     let setup = {originalWord: gameWord, rows : []};
-    for (let i = 0; i < validCombinations.length; i++){
+    for (let i = 0; i < gameCombinations.length; i++){
       //console.log(validCombinations[i]);
       setup.rows.push({
-        combination: validCombinations[i].combo,
+        combination: gameCombinations[i].combo,
         rowNumber: i,
         key: i,
         word: "",
       }) 
     }
     setBoardSetup(setup);
+    return true;
   }
 
   // use recursion / binary to speed up the process
@@ -216,7 +220,7 @@ function App() {
 
   useEffect(() => {
     if (gameWord.length === 0) return;
-    getValidCombinations();
+    if (!getValidCombinations()) return newGame();
     setCurrentRow(0);
     setGameStarted(true);
     setGameOver(false);
@@ -245,7 +249,7 @@ function App() {
     className={`App pt-2 h-100 pb-4`}>
       {textModals.map(
         (modal) => 
-          <Modal isOpen={modal.visible} ariaHideApp={false}
+          <Modal key={modal.role} isOpen={modal.visible} ariaHideApp={false}
             style={{
               overlay: {
                 background: "none",

@@ -23,7 +23,7 @@ const Keyboard = (props) => {
   return (
     <div className="keyboard d-flex flex-column align-items-stretch">
         { props.keys.map((row, rowNumber) => 
-        <div 
+        <div key={rowNumber}
           className="keyboardRow d-flex flex-row justify-content-center">
             {rowNumber === props.keys.length - 1 ? <button style={{color: props.darkMode ? '#d6d6d6' : 'black'}} className={`${props.darkMode ? 'bg-secondary' : ''} border-1 px-2 rounded keyboardKey`} onClick={() => props.onEnter()}>ENTER</button> : null}
             {row.map(
