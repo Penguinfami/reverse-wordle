@@ -144,11 +144,12 @@ function App() {
   const getValidCombinations = () =>{
     let validCombinations = [];
 
-    for (let i = 0; i < allCombinations.length; i++){ // guarantee at least 7 possible answers to not make it too difficult
+    /**for (let i = 0; i < allCombinations.length; i++){ // guarantee at least 7 possible answers to not make it too difficult
       let possibleAnswers = getPossibleComboAnswers(allCombinations[i]);
       if (possibleAnswers.length > 6) validCombinations.push({combo: allCombinations[i], answers: possibleAnswers});
-    }
-
+    }**/
+    // guarantee at least 7 possible answers to not make it too difficult
+    getValidCombinationsSplitter(0, allCombinations.length - 1, allCombinations, validCombinations, 7);
     let validCombosLength = validCombinations.length;
     for (let i = 0; i < (validCombosLength - 5); i++){
       let randomIndex = Math.floor(Math.random() * validCombinations.length);
@@ -167,6 +168,18 @@ function App() {
       }) 
     }
     setBoardSetup(setup);
+  }
+
+  // use recursion / binary to speed up the process
+  const getValidCombinationsSplitter = (start, end, fullList, newList, minAnswers) =>{
+    if (start === end) {
+      let possibleAnswers = getPossibleComboAnswers(fullList[start]);
+      if (possibleAnswers.length >= minAnswers) newList.push({combo: fullList[start], answers: possibleAnswers});
+    } else {
+      let middle = Math.floor((start + end) / 2)
+      getValidCombinationsSplitter(start, middle, fullList, newList, minAnswers);
+      getValidCombinationsSplitter(middle + 1, end, fullList, newList, minAnswers);
+    }
   }
 
   const onType = (key) => {
