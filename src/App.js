@@ -290,12 +290,14 @@ function App() {
       <Modal className="headerModal" isOpen={answersOpen} ariaHideApp={false}
         style={{
           overlay: {
-            background: `${darkMode ? '#3E3E3E' : 'white'}`
+            background: `${darkMode ? '#3E3E3E' : 'white'}`,
+            marginBottom: "2rem"
           },
           content: {
             background: `${darkMode ? '#3E3E3E' : 'white'}`,
             marginTop: "3rem",
-            minHeight: "75vh"
+            minHeight: "100vh",
+            height: "100%"
           }
         }}
       >
