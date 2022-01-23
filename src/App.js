@@ -21,7 +21,7 @@ function App() {
   const [roundCombinations, setRoundCombinations] = useState([]);
   const [boardSetup, setBoardSetup] = useState([{}]);
   const [gameStarted, setGameStarted] = useState(false);
-  const [gameOver, setGameOver] = useState(true);
+  const [gameOver, setGameOver] = useState(false);
   const [allCombinations, setAllCombinations] = useState([]);
   const [textModals, toggleModals] = useState(modals);
   const [settingsOpen, toggleSettings] = useState(false);
