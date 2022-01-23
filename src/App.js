@@ -229,7 +229,7 @@ function App() {
 
   return (
     <div style={{color: darkMode ? '#d6d6d6' : 'black', backgroundColor: darkMode ? '#3E3E3E' : 'white'}} 
-    className={`App py-2 `}>
+    className={`App pt-2 mb-4 `}>
       {textModals.map(
         (modal) => 
           <Modal isOpen={modal.visible} ariaHideApp={false}
