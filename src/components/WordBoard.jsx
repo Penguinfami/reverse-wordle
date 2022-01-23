@@ -30,7 +30,7 @@ const WordBoard = (props) => {
                     className="rounded-pill border-0" 
                     onClick={() => props.giveUp() }
                     style={{color: props.darkMode ? '#d6d6d6' : 'black', backgroundColor: props.darkMode ? '#3A3A3E' : 'white'}}>   
-                        VIEW POSSIBLE ANSWERS
+                        VIEW EXAMPLE ANSWERS
                 </button> 
                 : null
                 }
