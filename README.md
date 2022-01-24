@@ -1,6 +1,6 @@
 # Wordle Reverse
 
-A spin on the hit game WORDLE.
+A spin on the game WORDLE.
 
 In this version, the final word is already given. Fill in 5 possible guesses that match the color of the tiles in each row. 
 

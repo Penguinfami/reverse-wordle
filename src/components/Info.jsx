@@ -6,7 +6,7 @@ const Info = (props) => {
         <h1>HOW TO PLAY</h1>
         
         <div className="text-start p-2 d-flex flex-column">
-            <span>A spin on the hit game WORDLE.</span>
+            <span>A spin on the game WORDLE.</span>
             <span>
                 In this version, the final word is already given. Fill in <em>5 possible guesses</em> that match the color of the tiles in each row. 
             </span>
