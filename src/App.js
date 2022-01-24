@@ -27,7 +27,7 @@ function App() {
   const [settingsOpen, toggleSettings] = useState(false);
   const [answersOpen, toggleAnswers] = useState(false);
   const [infoOpen, toggleInfo] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+  const [modalOpen, toggleModalOpen] = useState(false);
   const [currentRow, setCurrentRow] = useState(-1);
   const [darkMode, toggleDarkMode] = useState(false);
 
@@ -55,6 +55,7 @@ function App() {
   }
 
   const checkWordValidity = () => {
+    if (modalOpen) return false;
     if (typedWord.length !== gameData.wordLength) return false;
     if (possibleWords.indexOf(typedWord) === -1) {
       openModal("invalidWord");
@@ -187,6 +188,7 @@ function App() {
   }
 
   const onType = (key) => {
+    if (modalOpen) return;
     let newWord = typedWord + key;
     if (newWord.length <= gameData.wordLength){
       setTypedWord(newWord)
@@ -195,6 +197,7 @@ function App() {
 
 
   const onBackspace = () => {
+    if (modalOpen) return;
     if (typedWord.length > 0){
       setTypedWord(typedWord.slice(0, typedWord.length - 1));
     }
@@ -229,16 +232,19 @@ function App() {
   const openModal = (role) => {
     let newModals = textModals.map((modal) => modal.role === role ? {...modal, visible: true} : modal );
     //console.log(newModals);
+    toggleModalOpen(true);
     toggleModals(newModals); 
   }
 
   const closeModal = () => {
     let newModals = textModals.map((modal) => modal.visible ? {...modal, visible: false} : modal );
+    toggleModalOpen(false);
     toggleModals(newModals);      
 
   }
 
   const giveUp = () => {
+    closeModal();
     toggleAnswers(true);
     setGameOver(true);
   }
