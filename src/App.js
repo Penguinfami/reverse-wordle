@@ -284,7 +284,6 @@ function App() {
         style={{
           overlay: {
             background: `${darkMode ? '#3E3E3E' : 'white'}`,
-            overflowY: "scroll"
           },
           content: {
             background: `${darkMode ? '#3E3E3E' : 'white'}`,

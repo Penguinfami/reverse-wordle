@@ -25,6 +25,7 @@
 .headerButton, .headerButton * {
   font-weight: 400 !important;
   background: none !important;
+  margin: 0 1%;
 }
 
 .keyboardLetter {
