@@ -283,12 +283,13 @@ function App() {
       <Modal className="headerModal" isOpen={settingsOpen} ariaHideApp={false}
         style={{
           overlay: {
-            background: `${darkMode ? '#3E3E3E' : 'white'}`
+            background: `${darkMode ? '#3E3E3E' : 'white'}`,
+            overflowY: "scroll"
           },
           content: {
             background: `${darkMode ? '#3E3E3E' : 'white'}`,
             marginTop: "3rem",
-            minHeight: "75vh"
+            minHeight: "75vh",
           }
         }}
       >
@@ -299,7 +300,8 @@ function App() {
       <Modal className="headerModal" isOpen={infoOpen} ariaHideApp={false}
         style={{
           overlay: {
-            background: `${darkMode ? '#3E3E3E' : 'white'}`
+            background: `${darkMode ? '#3E3E3E' : 'white'}`,
+            height: "100%",
           },
           content: {
             background: `${darkMode ? '#3E3E3E' : 'white'}`
@@ -314,7 +316,6 @@ function App() {
         style={{
           overlay: {
             background: `${darkMode ? '#3E3E3E' : 'white'}`,
-            marginBottom: "2rem"
           },
           content: {
             background: `${darkMode ? '#3E3E3E' : 'white'}`,

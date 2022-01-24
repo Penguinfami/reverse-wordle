@@ -65,6 +65,14 @@
   outline: none;
 }
 
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
+.ReactModal__Overlay {
+  overflow-y: scroll;
+}
+
 @media only screen and (max-width: 600px) {
   .keyboard, .wordBoard{
     margin-top: 5%;
