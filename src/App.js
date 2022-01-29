@@ -252,17 +252,19 @@ function App() {
 
   return (
     <div style={{color: darkMode ? '#d6d6d6' : 'black', backgroundColor: darkMode ? '#3E3E3E' : 'white'}} 
-    className={`App pt-2 h-100 pb-4`}>
+    className={`App pt-2 h-100 pb-4`} id="App">
       {textModals.map(
         (modal) => 
           <Modal key={modal.role} isOpen={modal.visible} ariaHideApp={false}
+            parentSelector={() => document.getElementById("App")}
             style={{
               overlay: {
                 background: "none",
                 display: "flex",
+                position: "absolute",
                 flexDirection: "column",
                 justifyContent: "center",
-                borderColor: "none"
+                borderColor: "none",
               },
               content: {
                 background: darkMode ? '#3E3E3E' : 'white',
@@ -271,7 +273,7 @@ function App() {
                 width: "80%",
                 maxWidth: "17rem",
                 margin: "8rem auto",
-                alignSelf: "center"
+                alignSelf: "center",
               }
             }} >
             <h4 className="text-center px-1 mt-3">{modal.title}</h4>
@@ -281,6 +283,7 @@ function App() {
         )
       }
       <Modal className="headerModal" isOpen={settingsOpen} ariaHideApp={false}
+        bodyOpenClassName="overflow-hidden"
         style={{
           overlay: {
             background: `${darkMode ? '#3E3E3E' : 'white'}`,
@@ -296,7 +299,8 @@ function App() {
         <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleSettings(false)}><i className="far fa-times-circle"></i></button>
       </Modal>
       
-      <Modal className="headerModal" isOpen={infoOpen} ariaHideApp={false}
+      <Modal className="headerModal" isOpen={infoOpen} ariaHideApp={false} bodyOpenClassName="overflow-hidden"
+
         style={{
           overlay: {
             background: `${darkMode ? '#3E3E3E' : 'white'}`,
@@ -311,7 +315,7 @@ function App() {
         <button style={{color: darkMode ? '#d6d6d6' : 'black'}} className="modalClose headerButton border-0 fs-1" onClick={() => toggleInfo(false)}><i className="far fa-times-circle"></i></button>
         </Modal>
 
-      <Modal className="headerModal" isOpen={answersOpen} ariaHideApp={false}
+      <Modal className="headerModal" isOpen={answersOpen} ariaHideApp={false} bodyOpenClassName="overflow-hidden"
         style={{
           overlay: {
             background: `${darkMode ? '#3E3E3E' : 'white'}`,
@@ -331,7 +335,9 @@ function App() {
       { gameStarted ? 
       <HeaderOptions darkMode={darkMode} toggleSettings={toggleSettings} toggleInfo={toggleInfo} /> : null}
 
-      { gameStarted ? <WordBoard giveUp={giveUp} gameOver={gameOver} gameStarted={gameStarted} darkMode={darkMode} setup={boardSetup} currentRow={currentRow} typedWord={typedWord} statuses={gameData.symbols}/> : null}
+      <div id="wordBoardContainer">
+        { gameStarted ? <WordBoard giveUp={giveUp} gameOver={gameOver} gameStarted={gameStarted} darkMode={darkMode} setup={boardSetup} currentRow={currentRow} typedWord={typedWord} statuses={gameData.symbols}/> : null}
+      </div>
       {gameStarted ? gameOver ?
       <button 
           className="rounded-pill border-3 px-4 py-3 my-3" 
