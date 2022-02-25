@@ -265,6 +265,7 @@ function App() {
                 flexDirection: "column",
                 justifyContent: "center",
                 borderColor: "none",
+                overflow: "visible"
               },
               content: {
                 background: darkMode ? '#3E3E3E' : 'white',
